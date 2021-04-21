@@ -42,9 +42,11 @@ type Server struct {
 }
 
 //NewServer 创建一个服务器句柄
-func NewServer() ziface.IServer {
+func NewServer(gb utils.GlobalObj) ziface.IServer {
 	printLogo()
-
+	//初始化全部配置
+	utils.InitGlobal(gb)
+	//其他操作
 	s := &Server{
 		Name:       utils.GlobalObject.Name,
 		IPVersion:  "tcp4",
