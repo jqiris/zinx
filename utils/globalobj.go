@@ -10,12 +10,8 @@
 package utils
 
 import (
-	"encoding/json"
-	"io/ioutil"
-	"os"
-
 	"github.com/jqiris/zinx/ziface"
-	"github.com/jqiris/zinx/zlog"
+	"os"
 )
 
 /*
@@ -27,31 +23,31 @@ type GlobalObj struct {
 		Server
 	*/
 	TCPServer ziface.IServer //当前Zinx的全局Server对象
-	Host      string         //当前服务器主机IP
-	TCPPort   int            //当前服务器主机监听端口号
-	Name      string         //当前服务器名称
+	Host      string        `yaml:"host"` //当前服务器主机IP
+	TCPPort   int            `yaml:"tcp_port"`//当前服务器主机监听端口号
+	Name      string        `yaml:"name"` //当前服务器名称
 
 	/*
 		Zinx
 	*/
-	Version          string //当前Zinx版本号
-	MaxPacketSize    uint32 //都需数据包的最大值
-	MaxConn          int    //当前服务器主机允许的最大链接个数
-	WorkerPoolSize   uint32 //业务工作Worker池的数量
-	MaxWorkerTaskLen uint32 //业务工作Worker对应负责的任务队列最大任务存储数量
-	MaxMsgChanLen    uint32 //SendBuffMsg发送消息的缓冲最大长度
+	Version          string `yaml:"version"` //当前Zinx版本号
+	MaxPacketSize    uint32  `yaml:"max_packet_size"`//都需数据包的最大值
+	MaxConn          int    `yaml:"max_conn"`//当前服务器主机允许的最大链接个数
+	WorkerPoolSize   uint32  `yaml:"worker_pool_size"`//业务工作Worker池的数量
+	MaxWorkerTaskLen uint32 `yaml:"max_worker_task_len"`//业务工作Worker对应负责的任务队列最大任务存储数量
+	MaxMsgChanLen    uint32 `yaml:"max_msg_chan_len"`//SendBuffMsg发送消息的缓冲最大长度
 
 	/*
 		config file path
 	*/
-	ConfFilePath string
+	//ConfFilePath string `yaml:"conf_file_path"`
 
 	/*
 		logger
 	*/
-	LogDir        string //日志所在文件夹 默认"./log"
-	LogFile       string //日志文件名称   默认""  --如果没有设置日志文件，打印信息将打印至stderr
-	LogDebugClose bool   //是否关闭Debug日志级别调试信息 默认false  -- 默认打开debug信息
+	LogDir        string `yaml:"log_dir"`//日志所在文件夹 默认"./log"
+	LogFile       string  `yaml:"log_file"`//日志文件名称   默认""  --如果没有设置日志文件，打印信息将打印至stderr
+	LogDebugClose bool   `yaml:"log_debug_close"`//是否关闭Debug日志级别调试信息 默认false  -- 默认打开debug信息
 }
 
 /*
@@ -60,48 +56,48 @@ type GlobalObj struct {
 var GlobalObject *GlobalObj
 
 //PathExists 判断一个文件是否存在
-func PathExists(path string) (bool, error) {
-	_, err := os.Stat(path)
-	if err == nil {
-		return true, nil
-	}
-	if os.IsNotExist(err) {
-		return false, nil
-	}
-	return false, err
-}
-
-//Reload 读取用户的配置文件
-func (g *GlobalObj) Reload() {
-
-	if confFileExists, _ := PathExists(g.ConfFilePath); confFileExists != true {
-		//fmt.Println("Config File ", g.ConfFilePath , " is not exist!!")
-		return
-	}
-
-	data, err := ioutil.ReadFile(g.ConfFilePath)
-	if err != nil {
-		panic(err)
-	}
-	//将json数据解析到struct中
-	err = json.Unmarshal(data, g)
-	if err != nil {
-		panic(err)
-	}
-
-	//Logger 设置
-	if g.LogFile != "" {
-		zlog.SetLogFile(g.LogDir, g.LogFile)
-	}
-	if g.LogDebugClose == true {
-		zlog.CloseDebug()
-	}
-}
+//func PathExists(path string) (bool, error) {
+//	_, err := os.Stat(path)
+//	if err == nil {
+//		return true, nil
+//	}
+//	if os.IsNotExist(err) {
+//		return false, nil
+//	}
+//	return false, err
+//}
+//
+////Reload 读取用户的配置文件
+//func (g *GlobalObj) Reload() {
+//
+//	if confFileExists, _ := PathExists(g.ConfFilePath); confFileExists != true {
+//		//fmt.Println("Config File ", g.ConfFilePath , " is not exist!!")
+//		return
+//	}
+//
+//	data, err := ioutil.ReadFile(g.ConfFilePath)
+//	if err != nil {
+//		panic(err)
+//	}
+//	//将json数据解析到struct中
+//	err = json.Unmarshal(data, g)
+//	if err != nil {
+//		panic(err)
+//	}
+//
+//	//Logger 设置
+//	if g.LogFile != "" {
+//		zlog.SetLogFile(g.LogDir, g.LogFile)
+//	}
+//	if g.LogDebugClose == true {
+//		zlog.CloseDebug()
+//	}
+//}
 
 /*
 	提供init方法，默认加载
 */
-func init() {
+func InitGlobal(gb GlobalObj) {
 	pwd, err := os.Getwd()
 	if err != nil {
 		pwd = "."
@@ -114,7 +110,6 @@ func init() {
 		Host:             "0.0.0.0",
 		MaxConn:          12000,
 		MaxPacketSize:    4096,
-		ConfFilePath:     pwd + "/conf/zinx.json",
 		WorkerPoolSize:   10,
 		MaxWorkerTaskLen: 1024,
 		MaxMsgChanLen:    1024,
@@ -122,7 +117,38 @@ func init() {
 		LogFile:          "",
 		LogDebugClose:    false,
 	}
-
-	//NOTE: 从配置文件中加载一些用户配置的参数
-	GlobalObject.Reload()
+	if len(gb.Name)> 0{
+		GlobalObject.Name = gb.Name
+	}
+	if gb.TCPPort > 0{
+		GlobalObject.TCPPort = gb.TCPPort
+	}
+	if len(gb.Host) > 0{
+		GlobalObject.Host = gb.Host
+	}
+	if gb.MaxConn > 0{
+		GlobalObject.MaxConn = gb.MaxConn
+	}
+	if gb.MaxPacketSize > 0{
+		GlobalObject.MaxPacketSize = gb.MaxPacketSize
+	}
+	if gb.WorkerPoolSize > 0{
+		GlobalObject.WorkerPoolSize = gb.WorkerPoolSize
+	}
+	if gb.MaxWorkerTaskLen > 0{
+		GlobalObject.MaxWorkerTaskLen = gb.MaxWorkerTaskLen
+	}
+	if gb.MaxMsgChanLen > 0{
+		GlobalObject.MaxMsgChanLen = gb.MaxMsgChanLen
+	}
+	if len(gb.LogDir) > 0{
+		GlobalObject.LogDir = gb.LogDir
+	}
+	if len(gb.LogFile) > 0{
+		GlobalObject.LogFile = gb.LogFile
+	}
+	GlobalObject.LogDebugClose = gb.LogDebugClose
+	//
+	////NOTE: 从配置文件中加载一些用户配置的参数
+	//GlobalObject.Reload()
 }
