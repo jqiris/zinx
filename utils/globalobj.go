@@ -22,9 +22,10 @@ type GlobalObj struct {
 		Server
 	*/
 	// TCPServer ziface.IServer //当前Zinx的全局Server对象
-	Host    string `yaml:"host"`     //当前服务器主机IP
-	TCPPort int    `yaml:"tcp_port"` //当前服务器主机监听端口号
-	Name    string `yaml:"name"`     //当前服务器名称
+	ServerId string `yaml:"server_id"` //当前服务器ID
+	Host     string `yaml:"host"`      //当前服务器主机IP
+	TCPPort  int    `yaml:"tcp_port"`  //当前服务器主机监听端口号
+	Name     string `yaml:"name"`      //当前服务器名称
 
 	/*
 		Zinx
