@@ -10,7 +10,6 @@
 package utils
 
 import (
-	"github.com/jqiris/zinx/ziface"
 	"os"
 )
 
@@ -22,20 +21,20 @@ type GlobalObj struct {
 	/*
 		Server
 	*/
-	TCPServer ziface.IServer //当前Zinx的全局Server对象
-	Host      string        `yaml:"host"` //当前服务器主机IP
-	TCPPort   int            `yaml:"tcp_port"`//当前服务器主机监听端口号
-	Name      string        `yaml:"name"` //当前服务器名称
+	// TCPServer ziface.IServer //当前Zinx的全局Server对象
+	Host    string `yaml:"host"`     //当前服务器主机IP
+	TCPPort int    `yaml:"tcp_port"` //当前服务器主机监听端口号
+	Name    string `yaml:"name"`     //当前服务器名称
 
 	/*
 		Zinx
 	*/
-	Version          string `yaml:"version"` //当前Zinx版本号
-	MaxPacketSize    uint32  `yaml:"max_packet_size"`//都需数据包的最大值
-	MaxConn          int    `yaml:"max_conn"`//当前服务器主机允许的最大链接个数
-	WorkerPoolSize   uint32  `yaml:"worker_pool_size"`//业务工作Worker池的数量
-	MaxWorkerTaskLen uint32 `yaml:"max_worker_task_len"`//业务工作Worker对应负责的任务队列最大任务存储数量
-	MaxMsgChanLen    uint32 `yaml:"max_msg_chan_len"`//SendBuffMsg发送消息的缓冲最大长度
+	Version          string `yaml:"version"`             //当前Zinx版本号
+	MaxPacketSize    uint32 `yaml:"max_packet_size"`     //都需数据包的最大值
+	MaxConn          int    `yaml:"max_conn"`            //当前服务器主机允许的最大链接个数
+	WorkerPoolSize   uint32 `yaml:"worker_pool_size"`    //业务工作Worker池的数量
+	MaxWorkerTaskLen uint32 `yaml:"max_worker_task_len"` //业务工作Worker对应负责的任务队列最大任务存储数量
+	MaxMsgChanLen    uint32 `yaml:"max_msg_chan_len"`    //SendBuffMsg发送消息的缓冲最大长度
 
 	/*
 		config file path
@@ -45,9 +44,9 @@ type GlobalObj struct {
 	/*
 		logger
 	*/
-	LogDir        string `yaml:"log_dir"`//日志所在文件夹 默认"./log"
-	LogFile       string  `yaml:"log_file"`//日志文件名称   默认""  --如果没有设置日志文件，打印信息将打印至stderr
-	LogDebugClose bool   `yaml:"log_debug_close"`//是否关闭Debug日志级别调试信息 默认false  -- 默认打开debug信息
+	LogDir        string `yaml:"log_dir"`         //日志所在文件夹 默认"./log"
+	LogFile       string `yaml:"log_file"`        //日志文件名称   默认""  --如果没有设置日志文件，打印信息将打印至stderr
+	LogDebugClose bool   `yaml:"log_debug_close"` //是否关闭Debug日志级别调试信息 默认false  -- 默认打开debug信息
 }
 
 /*
@@ -117,34 +116,34 @@ func InitGlobal(gb GlobalObj) {
 		LogFile:          "",
 		LogDebugClose:    false,
 	}
-	if len(gb.Name)> 0{
+	if len(gb.Name) > 0 {
 		GlobalObject.Name = gb.Name
 	}
-	if gb.TCPPort > 0{
+	if gb.TCPPort > 0 {
 		GlobalObject.TCPPort = gb.TCPPort
 	}
-	if len(gb.Host) > 0{
+	if len(gb.Host) > 0 {
 		GlobalObject.Host = gb.Host
 	}
-	if gb.MaxConn > 0{
+	if gb.MaxConn > 0 {
 		GlobalObject.MaxConn = gb.MaxConn
 	}
-	if gb.MaxPacketSize > 0{
+	if gb.MaxPacketSize > 0 {
 		GlobalObject.MaxPacketSize = gb.MaxPacketSize
 	}
-	if gb.WorkerPoolSize > 0{
+	if gb.WorkerPoolSize > 0 {
 		GlobalObject.WorkerPoolSize = gb.WorkerPoolSize
 	}
-	if gb.MaxWorkerTaskLen > 0{
+	if gb.MaxWorkerTaskLen > 0 {
 		GlobalObject.MaxWorkerTaskLen = gb.MaxWorkerTaskLen
 	}
-	if gb.MaxMsgChanLen > 0{
+	if gb.MaxMsgChanLen > 0 {
 		GlobalObject.MaxMsgChanLen = gb.MaxMsgChanLen
 	}
-	if len(gb.LogDir) > 0{
+	if len(gb.LogDir) > 0 {
 		GlobalObject.LogDir = gb.LogDir
 	}
-	if len(gb.LogFile) > 0{
+	if len(gb.LogFile) > 0 {
 		GlobalObject.LogFile = gb.LogFile
 	}
 	GlobalObject.LogDebugClose = gb.LogDebugClose
