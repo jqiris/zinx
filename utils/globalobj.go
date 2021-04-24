@@ -22,12 +22,11 @@ type GlobalObj struct {
 		Server
 	*/
 	// TCPServer ziface.IServer //当前Zinx的全局Server对象
-	ServerId    int32    `json:"server_id"` //当前服务器ID
-	ServerType  int32    `json:"server_type"` //当前服务器ID
-	ServerName  string `json:"server_name"`      //当前服务器名称
-	ServerIp    string `json:"server_ip"`      //当前服务器主机IP
-	ClientPort  int    `json:"client_port"`  //当前服务器主机监听端口号
-	
+	ServerId   int32  `json:"server_id"`   //当前服务器ID
+	ServerType int32  `json:"server_type"` //当前服务器ID
+	ServerName string `json:"server_name"` //当前服务器名称
+	ServerIp   string `json:"server_ip"`   //当前服务器主机IP
+	ClientPort int    `json:"client_port"` //当前服务器主机监听端口号
 
 	/*
 		Zinx
@@ -108,7 +107,7 @@ func InitGlobal(gb GlobalObj) {
 	GlobalObject = &GlobalObj{
 		ServerName:       "ZinxServerApp",
 		Version:          "V0.11",
-		ClientPort:        8999,
+		ClientPort:       8999,
 		ServerIp:         "0.0.0.0",
 		MaxConn:          12000,
 		MaxPacketSize:    4096,
