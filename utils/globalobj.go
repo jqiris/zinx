@@ -22,34 +22,34 @@ type GlobalObj struct {
 		Server
 	*/
 	// TCPServer ziface.IServer //当前Zinx的全局Server对象
-	ServerId   int32    `yaml:"server_id"` //当前服务器ID
-	ServerType int32    `yaml:"server_type"` //当前服务器ID
-	ServerName     string `yaml:"server_name"`      //当前服务器名称
-	ServerIp     string `yaml:"server_ip"`      //当前服务器主机IP
-	ClientPort  int    `yaml:"client_port"`  //当前服务器主机监听端口号
+	ServerId    int32    `json:"server_id"` //当前服务器ID
+	ServerType  int32    `json:"server_type"` //当前服务器ID
+	ServerName  string `json:"server_name"`      //当前服务器名称
+	ServerIp    string `json:"server_ip"`      //当前服务器主机IP
+	ClientPort  int    `json:"client_port"`  //当前服务器主机监听端口号
 	
 
 	/*
 		Zinx
 	*/
-	Version          string `yaml:"version"`             //当前Zinx版本号
-	MaxPacketSize    uint32 `yaml:"max_packet_size"`     //都需数据包的最大值
-	MaxConn          int    `yaml:"max_conn"`            //当前服务器主机允许的最大链接个数
-	WorkerPoolSize   uint32 `yaml:"worker_pool_size"`    //业务工作Worker池的数量
-	MaxWorkerTaskLen uint32 `yaml:"max_worker_task_len"` //业务工作Worker对应负责的任务队列最大任务存储数量
-	MaxMsgChanLen    uint32 `yaml:"max_msg_chan_len"`    //SendBuffMsg发送消息的缓冲最大长度
+	Version          string `json:"version"`             //当前Zinx版本号
+	MaxPacketSize    uint32 `json:"max_packet_size"`     //都需数据包的最大值
+	MaxConn          int    `json:"max_conn"`            //当前服务器主机允许的最大链接个数
+	WorkerPoolSize   uint32 `json:"worker_pool_size"`    //业务工作Worker池的数量
+	MaxWorkerTaskLen uint32 `json:"max_worker_task_len"` //业务工作Worker对应负责的任务队列最大任务存储数量
+	MaxMsgChanLen    uint32 `json:"max_msg_chan_len"`    //SendBuffMsg发送消息的缓冲最大长度
 
 	/*
 		config file path
 	*/
-	//ConfFilePath string `yaml:"conf_file_path"`
+	//ConfFilePath string `json:"conf_file_path"`
 
 	/*
 		logger
 	*/
-	LogDir        string `yaml:"log_dir"`         //日志所在文件夹 默认"./log"
-	LogFile       string `yaml:"log_file"`        //日志文件名称   默认""  --如果没有设置日志文件，打印信息将打印至stderr
-	LogDebugClose bool   `yaml:"log_debug_close"` //是否关闭Debug日志级别调试信息 默认false  -- 默认打开debug信息
+	LogDir        string `json:"log_dir"`         //日志所在文件夹 默认"./log"
+	LogFile       string `json:"log_file"`        //日志文件名称   默认""  --如果没有设置日志文件，打印信息将打印至stderr
+	LogDebugClose bool   `json:"log_debug_close"` //是否关闭Debug日志级别调试信息 默认false  -- 默认打开debug信息
 }
 
 /*
@@ -106,10 +106,10 @@ func InitGlobal(gb GlobalObj) {
 	}
 	//初始化GlobalObject变量，设置一些默认值
 	GlobalObject = &GlobalObj{
-		ServerName:             "ZinxServerApp",
+		ServerName:       "ZinxServerApp",
 		Version:          "V0.11",
-		ClientPort:          8999,
-		ServerIp:            "0.0.0.0",
+		ClientPort:        8999,
+		ServerIp:         "0.0.0.0",
 		MaxConn:          12000,
 		MaxPacketSize:    4096,
 		WorkerPoolSize:   10,
