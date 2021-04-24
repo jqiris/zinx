@@ -49,10 +49,10 @@ func NewServer(gb utils.GlobalObj) ziface.IServer {
 	printLogo()
 	//其他操作
 	s := &Server{
-		Name:       utils.GlobalObject.Name,
+		Name:       utils.GlobalObject.ServerName,
 		IPVersion:  "tcp4",
-		IP:         utils.GlobalObject.Host,
-		Port:       utils.GlobalObject.TCPPort,
+		IP:         utils.GlobalObject.ServerIp,
+		Port:       utils.GlobalObject.ClientPort,
 		msgHandler: NewMsgHandle(),
 		ConnMgr:    NewConnManager(),
 	}

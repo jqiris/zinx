@@ -22,10 +22,12 @@ type GlobalObj struct {
 		Server
 	*/
 	// TCPServer ziface.IServer //当前Zinx的全局Server对象
-	ServerId int    `yaml:"server_id"` //当前服务器ID
-	Host     string `yaml:"host"`      //当前服务器主机IP
-	TCPPort  int    `yaml:"tcp_port"`  //当前服务器主机监听端口号
-	Name     string `yaml:"name"`      //当前服务器名称
+	ServerId   int32    `yaml:"server_id"` //当前服务器ID
+	ServerType int32    `yaml:"server_type"` //当前服务器ID
+	ServerName     string `yaml:"server_name"`      //当前服务器名称
+	ServerIp     string `yaml:"server_ip"`      //当前服务器主机IP
+	ClientPort  int    `yaml:"client_port"`  //当前服务器主机监听端口号
+	
 
 	/*
 		Zinx
@@ -104,10 +106,10 @@ func InitGlobal(gb GlobalObj) {
 	}
 	//初始化GlobalObject变量，设置一些默认值
 	GlobalObject = &GlobalObj{
-		Name:             "ZinxServerApp",
+		ServerName:             "ZinxServerApp",
 		Version:          "V0.11",
-		TCPPort:          8999,
-		Host:             "0.0.0.0",
+		ClientPort:          8999,
+		ServerIp:            "0.0.0.0",
 		MaxConn:          12000,
 		MaxPacketSize:    4096,
 		WorkerPoolSize:   10,
@@ -117,14 +119,14 @@ func InitGlobal(gb GlobalObj) {
 		LogFile:          "",
 		LogDebugClose:    false,
 	}
-	if len(gb.Name) > 0 {
-		GlobalObject.Name = gb.Name
+	if len(gb.ServerName) > 0 {
+		GlobalObject.ServerName = gb.ServerName
 	}
-	if gb.TCPPort > 0 {
-		GlobalObject.TCPPort = gb.TCPPort
+	if gb.ClientPort > 0 {
+		GlobalObject.ClientPort = gb.ClientPort
 	}
-	if len(gb.Host) > 0 {
-		GlobalObject.Host = gb.Host
+	if len(gb.ServerIp) > 0 {
+		GlobalObject.ServerIp = gb.ServerIp
 	}
 	if gb.MaxConn > 0 {
 		GlobalObject.MaxConn = gb.MaxConn
