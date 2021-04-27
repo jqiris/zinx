@@ -64,7 +64,7 @@ func (mh *MsgHandle) AddRouter(msgID uint32, router ziface.IRouter) {
 
 //StartOneWorker 启动一个Worker工作流程
 func (mh *MsgHandle) StartOneWorker(workerID int, taskQueue chan ziface.IRequest) {
-	fmt.Println("Worker ID = ", workerID, " is started.")
+	//fmt.Println("Worker ID = ", workerID, " is started.")
 	//不断的等待队列中的消息
 	for {
 		select {
