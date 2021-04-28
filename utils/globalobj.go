@@ -22,8 +22,8 @@ type GlobalObj struct {
 		Server
 	*/
 	// TCPServer ziface.IServer //当前Zinx的全局Server对象
-	ServerId   int32  `json:"server_id"`   //当前服务器ID
-	ServerType int32  `json:"server_type"` //当前服务器ID
+	ServerId   string `json:"server_id"`   //当前服务器ID
+	ServerType string `json:"server_type"` //当前服务器类型
 	ServerName string `json:"server_name"` //当前服务器名称
 	ServerIp   string `json:"server_ip"`   //当前服务器主机IP
 	ClientPort int    `json:"client_port"` //当前服务器主机监听端口号

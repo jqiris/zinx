@@ -38,12 +38,12 @@ func NewServer(gb utils.GlobalObj) ziface.IServer {
 	//初始化全部配置
 	utils.InitGlobal(gb)
 	//打印配置信息
-	printLogo()
+	// printLogo()
 	//其他操作
 	s := &Server{
 		Name:       utils.GlobalObject.ServerName,
 		IPVersion:  "tcp4",
-		IP:         utils.GlobalObject.ServerIp,
+		IP:         "0.0.0.0",
 		Port:       utils.GlobalObject.ClientPort,
 		msgHandler: NewMsgHandle(),
 		ConnMgr:    NewConnManager(),
