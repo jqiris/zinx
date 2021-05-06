@@ -132,6 +132,11 @@ func (s *Server) AddRouter(msgID uint32, router ziface.IRouter) {
 	s.msgHandler.AddRouter(msgID, router)
 }
 
+//AddRouters 批量注册消息
+func (s *Server) AddRouters(routers map[uint32]ziface.IRouter) {
+	s.msgHandler.AddRouters(routers)
+}
+
 //GetConnMgr 得到链接管理
 func (s *Server) GetConnMgr() ziface.IConnManager {
 	return s.ConnMgr

@@ -2,6 +2,7 @@ package znet
 
 import (
 	"fmt"
+	"github.com/jqiris/zinx/utils"
 	"io"
 	"net"
 	"testing"
@@ -139,15 +140,24 @@ func DoConnectionLost(conn ziface.IConnection) {
 
 func TestServer(t *testing.T) {
 	//创建一个server句柄
-	s := NewServer()
+	s := NewServer(utils.GlobalObj{
+		ServerId:   "server_1001",
+		ServerType: "backend",
+		ServerName: "kungfu server",
+		ServerIp:   "",
+		ClientPort: 8999,
+		Version:    "1.01",
+	})
 
 	//注册链接hook回调函数
 	s.SetOnConnStart(DoConnectionBegin)
 	s.SetOnConnStop(DoConnectionLost)
 
 	// 多路由
-	s.AddRouter(1, &PingRouter{})
-	s.AddRouter(2, &HelloRouter{})
+	//s.AddRouter(1, &PingRouter{})
+	//s.AddRouter(2, &HelloRouter{})
+	routers := map[uint32]ziface.IRouter{1: &PingRouter{}, 2: &HelloRouter{}}
+	s.AddRouters(routers)
 
 	//	客户端测试
 	go ClientTest(1)

@@ -62,6 +62,13 @@ func (mh *MsgHandle) AddRouter(msgID uint32, router ziface.IRouter) {
 	fmt.Println("Add api msgID = ", msgID)
 }
 
+//AddRouters 批量注册消息
+func (mh *MsgHandle) AddRouters(routers map[uint32]ziface.IRouter) {
+	for msgID, router := range routers {
+		mh.Apis[msgID] = router
+	}
+}
+
 //StartOneWorker 启动一个Worker工作流程
 func (mh *MsgHandle) StartOneWorker(workerID int, taskQueue chan ziface.IRequest) {
 	//fmt.Println("Worker ID = ", workerID, " is started.")
