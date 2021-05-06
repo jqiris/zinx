@@ -9,9 +9,7 @@
 // @Author  Aceld - Thu Mar 11 10:32:29 CST 2019
 package utils
 
-import (
-	"os"
-)
+import "os"
 
 /*
 	存储一切有关Zinx框架的全局参数，供其他模块使用
@@ -51,54 +49,9 @@ type GlobalObj struct {
 	LogDebugClose bool   `json:"log_debug_close"` //是否关闭Debug日志级别调试信息 默认false  -- 默认打开debug信息
 }
 
-/*
-	定义一个全局的对象
-*/
 var GlobalObject *GlobalObj
 
-//PathExists 判断一个文件是否存在
-//func PathExists(path string) (bool, error) {
-//	_, err := os.Stat(path)
-//	if err == nil {
-//		return true, nil
-//	}
-//	if os.IsNotExist(err) {
-//		return false, nil
-//	}
-//	return false, err
-//}
-//
-////Reload 读取用户的配置文件
-//func (g *GlobalObj) Reload() {
-//
-//	if confFileExists, _ := PathExists(g.ConfFilePath); confFileExists != true {
-//		//fmt.Println("Config File ", g.ConfFilePath , " is not exist!!")
-//		return
-//	}
-//
-//	data, err := ioutil.ReadFile(g.ConfFilePath)
-//	if err != nil {
-//		panic(err)
-//	}
-//	//将json数据解析到struct中
-//	err = json.Unmarshal(data, g)
-//	if err != nil {
-//		panic(err)
-//	}
-//
-//	//Logger 设置
-//	if g.LogFile != "" {
-//		zlog.SetLogFile(g.LogDir, g.LogFile)
-//	}
-//	if g.LogDebugClose == true {
-//		zlog.CloseDebug()
-//	}
-//}
-
-/*
-	提供init方法，默认加载
-*/
-func InitGlobal(gb GlobalObj) {
+func init() {
 	pwd, err := os.Getwd()
 	if err != nil {
 		pwd = "."
@@ -118,6 +71,13 @@ func InitGlobal(gb GlobalObj) {
 		LogFile:          "",
 		LogDebugClose:    false,
 	}
+}
+
+/*
+	提供init方法，默认加载
+*/
+func InitGlobal(gb GlobalObj) {
+
 	if len(gb.ServerName) > 0 {
 		GlobalObject.ServerName = gb.ServerName
 	}
@@ -149,7 +109,4 @@ func InitGlobal(gb GlobalObj) {
 		GlobalObject.LogFile = gb.LogFile
 	}
 	GlobalObject.LogDebugClose = gb.LogDebugClose
-	//
-	////NOTE: 从配置文件中加载一些用户配置的参数
-	//GlobalObject.Reload()
 }
