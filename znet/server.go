@@ -17,6 +17,8 @@ var bottomLine = `└───────────────────�
 type Server struct {
 	//服务器的名称
 	Name string
+	//服务器ID
+	ID string
 	//tcp4 or other
 	IPVersion string
 	//服务绑定的IP地址
@@ -42,6 +44,7 @@ func NewServer(gb utils.GlobalObj) ziface.IServer {
 	//其他操作
 	s := &Server{
 		Name:       utils.GlobalObject.ServerName,
+		ID:         utils.GlobalObject.ServerId,
 		IPVersion:  "tcp4",
 		IP:         "0.0.0.0",
 		Port:       utils.GlobalObject.ClientPort,
@@ -107,6 +110,10 @@ func (s *Server) Start() {
 			go dealConn.Start()
 		}
 	}()
+}
+
+func (s *Server) GetServerID() string {
+	return s.ID
 }
 
 //Stop 停止服务

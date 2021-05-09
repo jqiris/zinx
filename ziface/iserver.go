@@ -25,4 +25,5 @@ type IServer interface {
 	SetOnConnStop(func(IConnection))        //设置该Server的连接断开时的Hook函数
 	CallOnConnStart(conn IConnection)       //调用连接OnConnStart Hook函数
 	CallOnConnStop(conn IConnection)        //调用连接OnConnStop Hook函数
+	GetServerID() string                    //获取服务端ID
 }

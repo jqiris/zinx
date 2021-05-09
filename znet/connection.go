@@ -133,6 +133,7 @@ func (c *Connection) StartReader() {
 			req := Request{
 				conn: c,
 				msg:  msg,
+				sid:  c.TCPServer.GetServerID(),
 			}
 
 			if utils.GlobalObject.WorkerPoolSize > 0 {
